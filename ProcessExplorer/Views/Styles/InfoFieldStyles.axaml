@@ -1,0 +1,15 @@
+<Styles xmlns="https://github.com/avaloniaui">
+    <Style Selector="Label.info-field-label">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Margin" Value="0,2,4,2" />
+    </Style>
+
+    <Style Selector="TextBox.info-field-value">
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="AcceptsReturn" Value="True" />
+        <Setter Property="IsEnabled" Value="False" />
+        <Setter Property="IsReadOnly" Value="True" />
+    </Style>
+</Styles>

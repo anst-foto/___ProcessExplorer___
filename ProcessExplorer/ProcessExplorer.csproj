@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**"/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia"/>
+    <PackageReference Include="Avalonia.Desktop"/>
+    <PackageReference Include="Avalonia.Themes.Fluent"/>
+    <PackageReference Include="Avalonia.Fonts.Inter"/>
+    <PackageReference Include="ReactiveUI.Avalonia"/>
+    <PackageReference Include="ReactiveUI" ExcludeAssets="analyzers"/>
+    <PackageReference Include="ReactiveUI.Binding"/>
+    <PackageReference Include="ReactiveUI.Primitives" ExcludeAssets="analyzers"/>
+  </ItemGroup>
+</Project>

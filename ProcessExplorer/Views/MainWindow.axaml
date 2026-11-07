@@ -1,0 +1,87 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ProcessExplorer.ViewModels"
+        xmlns:models="using:ProcessExplorer.Models"
+        xmlns:controls="using:ProcessExplorer.Views.Controls"
+        
+        x:Class="ProcessExplorer.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Process Explorer"
+        
+        Width="1100" Height="700"
+        MinWidth="800" MinHeight="500">
+    <Window.Styles>
+        <StyleInclude Source="avares://ProcessExplorer/Views/Styles/MainWindowStyles.axaml" />
+    </Window.Styles>
+    <Grid ColumnDefinitions="300,*" RowDefinitions="Auto,*,Auto" Margin="12">
+        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <MenuItem Header="Процесс">
+                <MenuItem Header="Завершить выбранный процесс…"
+                          Command="{Binding KillSelectedProcessCommand}" />
+                <Separator />
+                <MenuItem Header="Сохранить сведения выбранного процесса в JSON…"
+                          Command="{Binding SaveSelectedProcessCommand}" />
+                <MenuItem Header="Сохранить сведения обо всех процессах в JSON…"
+                          Command="{Binding SaveAllProcessesCommand}" />
+            </MenuItem>
+        </Menu>
+        <Border Grid.Row="1" Grid.Column="0" Classes="process-list-panel">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top" Text="Запущенные процессы"
+                           Classes="window-section-title" />
+                <ListBox ItemsSource="{Binding Processes}"
+                         SelectedItem="{Binding SelectedProcess, Mode=TwoWay}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:ProcessListItem">
+                            <Grid ColumnDefinitions="*,Auto" Classes="process-list-item">
+                                <TextBlock Grid.Column="0" Text="{Binding Name}"
+                                           TextTrimming="CharacterEllipsis" />
+                                <TextBlock Grid.Column="1" Text="{Binding Id}"
+                                           Classes="process-id" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </Border>
+        <Border Grid.Row="1" Grid.Column="1" Classes="process-details-panel">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Информация о процессе" Classes="details-title" />
+                    <TextBlock Text="Выберите процесс в списке слева."
+                               IsVisible="{Binding HasNoSelection}" />
+                    <StackPanel Spacing="6" IsVisible="{Binding HasSelection}">
+                        <controls:InfoField LabelText="Имя" Value="{Binding SelectedDetails.Name}" />
+                        <controls:InfoField LabelText="ID" Value="{Binding SelectedDetails.Id}" />
+                        <controls:InfoField LabelText="Заголовок окна"
+                                            Value="{Binding SelectedDetails.MainWindowTitle}" />
+                        <controls:InfoField LabelText="Отвечает" Value="{Binding SelectedDetails.Responding}" />
+                        <controls:InfoField LabelText="Время запуска" Value="{Binding SelectedDetails.StartTime}" />
+                        <controls:InfoField LabelText="CPU-время" Value="{Binding SelectedDetails.TotalProcessorTime}" />
+                        <controls:InfoField LabelText="Класс приоритета"
+                                            Value="{Binding SelectedDetails.PriorityClass}" />
+                        <controls:InfoField LabelText="Базовый приоритет"
+                                            Value="{Binding SelectedDetails.BasePriority}" />
+                        <controls:InfoField LabelText="Сеанс" Value="{Binding SelectedDetails.SessionId}" />
+                        <controls:InfoField LabelText="Дескрипторы" Value="{Binding SelectedDetails.HandleCount}" />
+                        <controls:InfoField LabelText="Потоки" Value="{Binding SelectedDetails.ThreadCount}" />
+                        <controls:InfoField LabelText="Рабочий набор" Value="{Binding SelectedDetails.WorkingSet}" />
+                        <controls:InfoField LabelText="Частная память" Value="{Binding SelectedDetails.PrivateMemory}" />
+                        <controls:InfoField LabelText="Виртуальная память"
+                                            Value="{Binding SelectedDetails.VirtualMemory}" />
+                        <controls:InfoField LabelText="Paged-память" Value="{Binding SelectedDetails.PagedMemory}" />
+                        <controls:InfoField LabelText="Основной модуль" Value="{Binding SelectedDetails.MainModule}" />
+                        <controls:InfoField LabelText="Модули" Value="{Binding SelectedDetails.ModuleList}" />
+                        <controls:InfoField LabelText="Сведения о потоках" Value="{Binding SelectedDetails.ThreadList}" />
+                        <controls:InfoField LabelText="Состояние доступа к информации"
+                                            Value="{Binding SelectedDetails.AvailabilityNote}" />
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                   Text="{Binding Status}" Classes="status-line" />
+    </Grid>
+</Window>
